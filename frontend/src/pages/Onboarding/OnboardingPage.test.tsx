@@ -4,6 +4,9 @@ import { OnboardingPage } from "./OnboardingPage";
 
 vi.mock("../../services", () => ({
   getSections: vi.fn(),
+  updateSection: vi.fn(),
+  updateSectionOwners: vi.fn(),
+  clearSectionOwners: vi.fn(),
 }));
 
 import { UserProvider } from "../../context/UserContext";

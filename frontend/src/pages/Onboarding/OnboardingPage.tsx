@@ -1,43 +1,39 @@
-import { useEffect, useState } from 'react';
-import { SectionAccordion } from '../../components';
+import { Card, OnboardingList } from '../../components';
+import { useSections } from '../../context/SectionsContext';
 import { useUser } from '../../context/UserContext';
-import type { SectionEntity } from '../../entities';
-import { getSections, updateSection } from '../../services';
 
 export const OnboardingPage = () => {
     const { logout, user } = useUser();
-    const [sections, setSections] = useState<SectionEntity[]>([]);
-
-    const handleSave = async (id: string, data: any) => {
-        await updateSection(id, data);
-        const updatedSections = sections.map(sec => (sec.id === id ? { ...sec, formData: data } : sec));
-        setSections(updatedSections);
-    };
-
-    useEffect(() => {
-        getSections().then(setSections);
-    }, []);
+    const { sections, handleUpdateOwners, handleSave, clear } = useSections();
 
     return (
+
         <div style={styles.container}>
-            <button style={{ ...styles.button, ...styles.logout }} onClick={logout}>Logout</button>
-            <div style={styles.list}>
-                {sections.map(section => (
-                    <SectionAccordion
-                        key={section.id}
-                        section={section}
-                        currentUser={user?.email || ""}
-                        onSave={handleSave}
-                    />
-                ))}
+            <div style={styles.buttonsContainer}>
+                <button style={{ ...styles.button, ...styles.logout }} onClick={clear}>Clear Data</button>
+                <button style={{ ...styles.button, ...styles.logout, backgroundColor: '#f00000' }} onClick={logout}>Change user</button>
             </div>
+            <Card header={
+                <h2 style={{ margin: "0 10px" }}>
+                    Getting Started
+                </h2>
+            }>
+                <p style={{ padding: "5px 10px" }}>
+                    Complete the onboarding information below so we can get everything up and running for your practice and future Teem Member.
+                </p>
+            </Card>
+            <OnboardingList
+                sections={sections}
+                currentUserId={user?.id || ""}
+                onUpdateOwners={handleUpdateOwners}
+                onSave={handleSave}
+            />
         </div>
     )
 }
 
 const styles: Record<string, React.CSSProperties> = {
     container: {
-        height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -55,6 +51,13 @@ const styles: Record<string, React.CSSProperties> = {
         borderRadius: "8px",
         backgroundColor: "white",
         boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+    },
+    buttonsContainer: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: 10,
+        marginBottom: 20,
     },
     button: {
         padding: "10px",

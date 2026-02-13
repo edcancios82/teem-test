@@ -3,9 +3,5 @@ import { LoginPage, OnboardingPage } from './pages';
 
 export const App = () => {
     const { user, } = useUser();
-    return (
-        <div>
-            {user ? <OnboardingPage /> : <LoginPage />}
-        </div>
-    )
+    return user ? <OnboardingPage /> : <LoginPage />;
 }

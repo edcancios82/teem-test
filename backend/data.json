@@ -2,27 +2,43 @@
   "sections": [
     {
       "id": 1,
-      "title": "Section 1",
+      "title": "Gather info & initial setup",
       "owners": [],
-      "formData": {}
+      "formData": {
+        "field1Description": "Full name",
+        "field2Description": "Comment"
+      },
+      "description": "In this step, we'll collec basic information to help you get started."
     },
     {
       "id": 2,
-      "title": "Section 2",
+      "title": "Tech Setup",
       "owners": [],
-      "formData": {}
+      "formData": {
+        "field1Description": "Device",
+        "field2Description": "Comment"
+      },
+      "description": "'Set up the tools Teem needs to support your team"
     },
     {
       "id": 3,
-      "title": "Section 3",
+      "title": "Goals Setup",
       "owners": [],
-      "formData": {}
+      "formData": {
+        "field1Description": "Goal",
+        "field2Description": "Comment"
+      },
+      "description": "Pick the goals your Teem Member will drive"
     },
     {
       "id": 4,
-      "title": "Section 4",
+      "title": "Required Courses & Resources",
       "owners": [],
-      "formData": {}
+      "formData": {
+        "field1Description": "Course/Resource",
+        "field2Description": "Comment"
+      },
+      "description": "Take the required courses and acknowledge materials to proceed."
     }
   ],
   "users": [
