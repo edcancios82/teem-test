@@ -24,7 +24,7 @@ export const OnboardingPage = () => {
             </Card>
             <OnboardingList
                 sections={sections}
-                currentUserId={user?.id || ""}
+                currentUserId={user?.id?.toString() || ""}
                 onUpdateOwners={handleUpdateOwners}
                 onSave={handleSave}
             />

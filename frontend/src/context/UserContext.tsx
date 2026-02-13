@@ -1,21 +1,21 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
-import type { User } from "../entities/Users";
+import type { UserEntity } from "../entities/Users";
 
 type UserContextType = {
-    user: User | null;
-    login: (user: User) => void;
+    user: UserEntity | null;
+    login: (user: UserEntity) => void;
     logout: () => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<User | null>(() => {
+    const [user, setUser] = useState<UserEntity | null>(() => {
         const storedUser = localStorage.getItem("user");
         return storedUser ? JSON.parse(storedUser) : null;
     });
 
-    const login = (user: User) => {
+    const login = (user: UserEntity) => {
         setUser(user);
 
         localStorage.setItem("user", JSON.stringify(user));

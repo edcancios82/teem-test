@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext';
-import type { User } from '../../entities/Users';
+import type { UserEntity } from '../../entities/Users';
 import { getUsers } from '../../services';
 
 export const LoginPage = () => {
     const { login } = useUser();
 
-    const [users, setUsers] = useState<User[]>([]);
-    const [selectedUser, setSelectedUser] = useState<User | null>(null);
+    const [users, setUsers] = useState<UserEntity[]>([]);
+    const [selectedUser, setSelectedUser] = useState<UserEntity | null>(null);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -22,7 +22,7 @@ export const LoginPage = () => {
     }
 
     useEffect(() => {
-        getUsers().then((data: User[]) => setUsers(data)).catch(err => console.error(err))
+        getUsers().then((data: UserEntity[]) => setUsers(data)).catch(err => console.error(err))
     }, [])
 
     return (
