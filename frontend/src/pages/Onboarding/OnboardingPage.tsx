@@ -1,11 +1,18 @@
 import { useEffect, useState } from 'react';
+import { SectionAccordion } from '../../components';
 import { useUser } from '../../context/UserContext';
 import type { SectionEntity } from '../../entities';
-import { getSections } from '../../services';
+import { getSections, updateSection } from '../../services';
 
 export const OnboardingPage = () => {
-    const { logout } = useUser();
+    const { logout, user } = useUser();
     const [sections, setSections] = useState<SectionEntity[]>([]);
+
+    const handleSave = async (id: string, data: any) => {
+        await updateSection(id, data);
+        const updatedSections = sections.map(sec => (sec.id === id ? { ...sec, formData: data } : sec));
+        setSections(updatedSections);
+    };
 
     useEffect(() => {
         getSections().then(setSections);
@@ -16,9 +23,12 @@ export const OnboardingPage = () => {
             <button style={{ ...styles.button, ...styles.logout }} onClick={logout}>Logout</button>
             <div style={styles.list}>
                 {sections.map(section => (
-                    <div key={section.id} style={styles.section}>
-                        {section.title}
-                    </div>
+                    <SectionAccordion
+                        key={section.id}
+                        section={section}
+                        currentUser={user?.email || ""}
+                        onSave={handleSave}
+                    />
                 ))}
             </div>
         </div>

@@ -1,5 +1,5 @@
 export interface SectionEntity {
-    id: number;
+    id: string;
     title: string;
     owners: string[];
     formData: Record<string, any>;

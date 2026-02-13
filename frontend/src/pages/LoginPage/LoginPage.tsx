@@ -1,39 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUser } from '../../context/UserContext';
+import type { User } from '../../entities/Users';
+import { getUsers } from '../../services';
 
 export const LoginPage = () => {
     const { login } = useUser();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+
+    const [users, setUsers] = useState<User[]>([]);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        login(email, password);
+        if (selectedUser) {
+            login(selectedUser);
+        }
     };
+
+    const handleSelectUser = (id: number) => {
+        const user = users.find(user => user.id === id) || null;
+        setSelectedUser(user);
+    }
+
+    useEffect(() => {
+        getUsers().then((data: User[]) => setUsers(data)).catch(err => console.error(err))
+    }, [])
+
     return (
         <div style={styles.container}>
             <form style={styles.form} onSubmit={handleSubmit}>
                 <h2>Login</h2>
-
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                <select
+                    value={selectedUser?.id || ""}
+                    onChange={(e) => handleSelectUser(Number(e.target.value))}
                     style={styles.input}
-                    required
-                />
-
-                <input
-                    type="password"
-                    placeholder="Senha"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    style={styles.input}
-                    required
-                />
-
-                <button type="submit" style={styles.button}>
+                >
+                    <option value="">Select user</option>
+                    {users.map(user => (
+                        <option key={user.email} value={user.id}>
+                            {user.email}
+                        </option>
+                    ))}
+                </select>
+                <button type="submit" style={{ ...styles.button, backgroundColor: selectedUser ? "#007bff" : "#ccc", cursor: selectedUser ? "pointer" : "not-allowed" }} disabled={!selectedUser}>
                     Entrar
                 </button>
             </form>

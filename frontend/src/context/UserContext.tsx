@@ -1,13 +1,9 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
-
-type User = {
-    id: number;
-    email: string;
-};
+import type { User } from "../entities/Users";
 
 type UserContextType = {
     user: User | null;
-    login: (email: string, password: string) => void;
+    login: (user: User) => void;
     logout: () => void;
 };
 
@@ -19,15 +15,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         return storedUser ? JSON.parse(storedUser) : null;
     });
 
-    const login = (email: string, _password: string) => {
-        setUser({
-            id: 1,
-            email,
-        });
-        localStorage.setItem("user", JSON.stringify({
-            id: 1,
-            email,
-        }));
+    const login = (user: User) => {
+        setUser(user);
+
+        localStorage.setItem("user", JSON.stringify(user));
     };
 
     const logout = () => {
