@@ -1,11 +1,12 @@
 import { render, screen } from "@testing-library/react";
+import { describe, expect, test, vi } from "vitest";
 import { OnboardingPage } from "./OnboardingPage";
-import { describe, test, expect, vi } from "vitest";
 
 vi.mock("../../services", () => ({
   getSections: vi.fn(),
 }));
 
+import { UserProvider } from "../../context/UserContext";
 import { getSections } from "../../services";
 
 describe("OnboardingPage", () => {
@@ -15,7 +16,11 @@ describe("OnboardingPage", () => {
       { id: 2, title: "Section 2" },
     ]);
 
-    render(<OnboardingPage />);
+    render(
+      <UserProvider>
+        <OnboardingPage />
+      </UserProvider>
+    );
 
     expect(await screen.findByText("Section 1")).toBeInTheDocument();
     expect(await screen.findByText("Section 2")).toBeInTheDocument();
