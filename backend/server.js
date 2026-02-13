@@ -29,14 +29,13 @@ app.put("/sections/:id", (req, res) => {
 app.put("/sections/:sectionId/update-owners", (req, res) => {
   const data = JSON.parse(fs.readFileSync("./data.json"));
   const section = data.sections.find(s => s.id.toString() === req.params.sectionId);
-  const user = data.users.find(u => u.id === req.body.userId);
+  const user = data.users.find(u => u.id.toString() === req.body.userId);
 
   if (section && user && !section.owners.includes(user.id)) {
-    section.owners.push(user.id);
+    section.owners.push(user.id.toString());
   }
 
   fs.writeFileSync("./data.json", JSON.stringify(data, null, 2));
-  console.log(`Updated owners for section ${section.id}:`, section.owners);
   res.json(section);
 });
 
