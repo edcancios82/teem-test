@@ -1,0 +1,8 @@
+{
+  "sections": [
+    { "id": 1, "title": "Section 1", "owners": [], "formData": {} },
+    { "id": 2, "title": "Section 2", "owners": [], "formData": {} },
+    { "id": 3, "title": "Section 3", "owners": [], "formData": {} },
+    { "id": 4, "title": "Section 4", "owners": [], "formData": {} }
+  ]
+}
