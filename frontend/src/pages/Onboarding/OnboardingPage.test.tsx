@@ -71,7 +71,7 @@ describe("OnboardingPage", () => {
       {
         id: "1",
         title: "Section 1",
-        owners: [1], // Use number 1 to match user.id (number type)
+        owners: ["1"], // Use string "1" to match user.id (string type)
         description: "Test description 1",
         formData: {
           field1Description: "Field 1",
